@@ -70,7 +70,7 @@ async function emitGetTopMemoryProcesses() {
       SELECT
         pid,
         process_name,
-        (SUM(CASE WHEN call = 'mmap2' THEN segment_size ELSE 0 END) - SUM(CASE WHEN call = 'munmap' THEN segment_size ELSE 0 END)) AS memory
+        (SUM(CASE WHEN call_ = 'mmap2' THEN segment_size ELSE 0 END) - SUM(CASE WHEN call_ = 'munmap' THEN segment_size ELSE 0 END)) AS memory
       FROM procesos
       GROUP BY pid, process_name
       HAVING memory > 0
@@ -96,8 +96,8 @@ async function emitGetTopMemoryProcesses() {
   }
 }
 
-setInterval(emitLatestProcesses, 5000); // Emitir cada 5 segundos
-setInterval(emitGetTopMemoryProcesses, 5000); // Emitir cada 5 segundos
+setInterval(emitLatestProcesses, 2000); // Emitir cada 2 segundos
+setInterval(emitGetTopMemoryProcesses, 2000); // Emitir cada 2 segundos
 
 const PORT = process.env.PORT || 5000; // Asegúrate de que este puerto coincida con el que usas en el frontend
 
